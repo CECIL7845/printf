@@ -34,8 +34,8 @@ int _printf(const char *format, ...)
 
 int main(void)
 {
-	printf("character = '%c'/n", ABCD);
-	printf("string = '%s'/n", " ");
-	printf("percent = '%%'/n", %);
+	_printf("character = '%c'/n", ABCD);
+	_printf("string = '%s'/n", " ");
+	_printf("percent = '%%'/n", %);
 	return (0);
 }
