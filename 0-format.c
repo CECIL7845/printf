@@ -15,27 +15,19 @@ int _printf(const char *format, ...)
 	va_list fmt;
 
 	va_start(fmt, format);
+	if (format = "%"; format++)
+	{
+		format = va_arg(fmt, int);
+		_printf("%%\n", *format);
+	}
 	int i = 0;
-	for (i = 0; i < format; i++)
+	if (i = 0; i < format; i++)
 	{
 		i = va_arg(fmt, int);
+		_printf("%c\n", i);
+		_printf("%s\n", "i");
 	}
 	
 	va_end(i);
 	return (i);
-}
-
-
-/**
- * main -Entry point
- *
- * Return:0
- */
-
-int main(void)
-{
-	_printf("character = '%c'/n", ABCD);
-	_printf("string = '%s'/n", " ");
-	_printf("percent = '%%'/n", %);
-	return (0);
 }
