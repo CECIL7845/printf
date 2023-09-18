@@ -1,33 +1,62 @@
-#include <stdio.h>
-#include <stdarg.h>
+#include "main.h"
 
 /**
- * int _printf - a function that produces
+ * _printf - a function that produces
  *  output according to a format.
  *
  *  @...: a variable number of strings to be printed
+ *  @char:character to be printed
+ *  @format: pointer to a format
  *
  *  Return: number of characters pointed
  */
 
 int _printf(const char *format, ...)
 {
-	va_list fmt;
+	int prn = 0;
 
-	va_start(fmt, format);
-	if (format = "%"; format++)
+	va_list srn;
+
+	if (format == NULL)
 	{
-		format = va_arg(fmt, int);
-		_printf("%%\n", *format);
+		return (-1);
 	}
-	int i = 0;
-	if (i = 0; i < format; i++)
+
+	va_start(srn, format);
+	for (*format)
 	{
-		i = va_arg(fmt, int);
-		_printf("%c\n", i);
-		_printf("%s\n", "i");
+		if (*format != '%')
+		{
+			write(1, format, 1);
+			prn++;
+		}
+		else
+		{
+			format++;
+
+			if (format == '%')
+			{
+				write(1, format, 1);
+				prn++;
+			}
+			else if (format == 'c')
+			{
+				char c = va_arg(srn, int);
+
+				write(1, &c, 1);
+				prn++;
+			}
+			else if (format == 's')
+			{
+				int *str = va_arg(srn, int);
+
+				write(1, str, strlen(str));
+				prn++;
+			}
+			format++;
+		}
 	}
-	
-	va_end(i);
-	return (i);
+	va_end(srn);
+	return (prn);
 }
+
