@@ -76,12 +76,7 @@ int _printf(const char *format, ...)
 
 				prn += _write_str(str);
 			}
-			else
-			{
-				prn += _write_char('%');
-			}
 		}
-
 		format++;
 	}
 	va_end(srn);
