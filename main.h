@@ -8,7 +8,6 @@
 #include <unistd.h>
 #include <string.h>
 
-int _write_char(char c)
 int _printf(const char *format, ...);
 
 #endif
