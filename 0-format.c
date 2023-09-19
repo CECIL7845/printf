@@ -59,4 +59,3 @@ int _printf(const char *format, ...)
 	va_end(srn);
 	return (prn);
 }
-
