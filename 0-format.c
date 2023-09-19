@@ -2,17 +2,13 @@
 
 /**
  * _printf - produces output according to a format
- * @*format - pointer to a format
- * char - character to a pointer
+ * @format: pointer to a format string
  *
- * Return: character to a pointer
- *
+ * Return: the number of characters printed (excluding null byte)
  */
-
 int _printf(const char *format, ...)
 {
 	int prn = 0;
-
 	va_list srn;
 
 	if (format == NULL)
@@ -49,18 +45,18 @@ int _printf(const char *format, ...)
 
 				if (str == NULL)
 				{
-				write(1, "(null)", 6);
-				prn += 6;
+					write(1, "(null)", 6);
+					prn += 6;
+				}
+				else
+				{
+					write(1, str, strlen(str));
+					prn += strlen(str);
 				}
 			}
-			else
-			{
-				write(1, str, strlen(str));
-				prn += strlen(str);
-			}
 		}
+		format++;
 	}
-	format++;
 	va_end(srn);
 	return (prn);
 }
