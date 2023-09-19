@@ -24,11 +24,47 @@ int _printf(const char *format, ...)
 	{
 		if (format[i] != '%')
 		{
+<<<<<<< HEAD
 			buffer[buff_ind++] = format[i];
 			if (buff_ind == BUFF_SIZE)
 				print_buffer(buffer, &buff_ind);
 			/* write(1, &format[i], 1);*/
 			printed_chars++;
+=======
+			int num = va_arg(args, int);
+			char buffer[20];
+			int length = 0;
+
+			if (num == 0)
+			{
+				buffer[length++] = '0';
+			}
+			else
+			{
+				if (num < 0)
+				{
+					write(1, "-", 1);
+					num = -num;
+					printed_chars++;
+				}
+				while (num > 0)
+				{
+					buffer[length++] = num % 10 + '0';
+					num /= 10;
+				}
+
+				while (j >= 0)
+				{
+					j--;
+				}
+				{
+					write(1, &buffer[j], 1);
+					printed_chars++;
+				}
+			}
+
+			i += 2;
+>>>>>>> refs/remotes/origin/master
 		}
 		else
 		{

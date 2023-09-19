@@ -8,6 +8,10 @@
 #include <unistd.h>
 #include <string.h>
 
+<<<<<<< HEAD
+=======
+int _write_char(char c);
+>>>>>>> refs/remotes/origin/master
 int _printf(const char *format, ...);
 
 #endif
