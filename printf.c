@@ -36,49 +36,81 @@ int _write_str(char *str)
 }
 
 /**
- * _printf - Produces output according to a format
+ * _printf - a function that produces output according to a format
  * @format: Pointer to a format string
  *
- * Return: The number of characters printed (excluding null byte)
+ * Return: The number of characters printed
  */
 int _printf(const char *format, ...)
 {
 	int prn = 0;
-	va_list srn;
+	va_list args;
 
 	if (format == NULL)
+	{
 		return (-1);
+	}
 
-	va_start(srn, format);
-
+	va_start(args, format);
 	while (*format)
 	{
-		if (*format != '%')
+		if (*format == '%')
 		{
-			prn += _write_char(*format);
+			format++;
+			if (*format == '\0')
+			break;
+
+			prn += handle_format_specifier(format, args);
 		}
 		else
 		{
-			format++;
-			if (*format == '%')
-			{
-				prn += _write_char(*format);
-			}
-			else if (*format == 'c')
-			{
-				char c = va_arg(srn, int);
-
-				prn += _write_char(c);
-			}
-			else if (*format == 's')
-			{
-				char *str = va_arg(srn, char *);
-
-				prn += _write_str(str);
-			}
+			prn += _write_char(*format);
 		}
 		format++;
 	}
-	va_end(srn);
+
+	va_end(args);
+	return (prn);
+}
+
+/**
+ * handle_format_specifier - Handles format specifiers in the format string
+ * @format: Pointer to the format string
+ * @args: Argument list
+ *
+ * Return: The number of characters printed
+ */
+int handle_format_specifier(const char *format, va_list args)
+{
+	int prn = 0;
+
+	if (*format == 'c')
+	{
+	int c = va_arg(args, int);
+		prn += _write_char(c);
+	}
+	else if (*format == 's')
+	{
+		char *str = va_arg(args, char *);
+
+		if (str == NULL)
+		{
+			prn += _write_str("(null)");
+		}
+		else
+		{
+			prn += _write_str(str);
+		}
+	}
+	else if (*format == '%')
+	{
+		prn += _write_char('%');
+	}
+	else
+	{
+		prn += _write_char('%');
+		prn += _write_char(*format);
+	}
+
 	return (prn);
 }
