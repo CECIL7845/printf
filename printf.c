@@ -29,7 +29,6 @@ int _write_str(char *str)
 	}
 	else
 	{
-		len = 6;
 		write(1, "(null)", len);
 	}
 	return (len);
