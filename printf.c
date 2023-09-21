@@ -38,12 +38,8 @@ int _write_str(char *str)
 /**
  * _printf - a function that produces output according to a format
  * @format: Pointer to a format string
-<<<<<<< HEAD
  *
- * Return: The number of characters printed
-=======
- * Return: The number of characters printed (excluding null byte)
->>>>>>> 9772465db1cb9bd09928fbcfd15b470fa8d6b09f
+ * Return: number of characters to be printed
  */
 
 int _printf(const char *format, ...)
