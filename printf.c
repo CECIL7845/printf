@@ -3,9 +3,9 @@
 /**
  * _write_char - Writes a character to stdout
  * @c: The character to write
- *
  * Return: The number of characters written (1)
  */
+
 int _write_char(char c)
 {
 	return (write(1, &c, 1));
@@ -14,14 +14,14 @@ int _write_char(char c)
 /**
  * _write_str - Writes a string to stdout
  * @str: The string to write
- *
  * Return: The number of characters written
  */
+
 int _write_str(char *str)
 {
 	int len = 0;
 
-	if (str)
+	if (str != NULL)
 	{
 		len = strlen(str);
 
@@ -38,9 +38,14 @@ int _write_str(char *str)
 /**
  * _printf - a function that produces output according to a format
  * @format: Pointer to a format string
+<<<<<<< HEAD
  *
  * Return: The number of characters printed
+=======
+ * Return: The number of characters printed (excluding null byte)
+>>>>>>> 9772465db1cb9bd09928fbcfd15b470fa8d6b09f
  */
+
 int _printf(const char *format, ...)
 {
 	int prn = 0;
