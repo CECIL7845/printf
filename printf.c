@@ -57,13 +57,13 @@ int _printf(const char *format, ...)
 				break;
 			}
 
-			prn += handle_format_specifier(&format, args);
+			prn += handle_format_specifier(format, args);
 		}
 		else
 		{
 			prn += _write_char(*format);
 		}
-	format++;
+		format++;
 	}
 
 	va_end(args);
@@ -77,11 +77,11 @@ int _printf(const char *format, ...)
  *
  * Return: number of characters to be printed
  */
-int handle_format_specifier(const char **format, va_list args)
+int handle_format_specifier(const char *format, va_list args)
 {
 	int prn = 0;
 
-	switch (**format)
+	switch (*format)
 	{
 		case 'c':
 		{
@@ -112,11 +112,10 @@ int handle_format_specifier(const char **format, va_list args)
 		default:
 		{
 			prn += _write_char('%');
-			prn += _write_char(**format);
+			prn += _write_char(*format);
 			break;
 		}
 	}
 
-	(*format)++;
 	return (prn);
 }
