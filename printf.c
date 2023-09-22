@@ -116,6 +116,7 @@ int handle_format_specifier(const char *format, va_list args)
 			break;
 		}
 	}
+	format++;
 
 	return (prn);
 }
