@@ -1,122 +1,77 @@
 #include "main.h"
 
-/**
- * _write_char - Writes a character to stdout
- * @c: The character to write
- *
- * Return: The number of characters written (1)
- */
-int _write_char(char c)
-{
-	return (write(1, &c, 1));
-}
+void print_buffer(char buffer[], int *buff_ind);
 
 /**
- * _write_str - Writes a string to stdout
- * @str: The string to write
- *
- * Return: The number of characters written
+ * _printf - Printf function
+ * @format: format.
+ * Return: Printed chars.
  */
-int _write_str(const char *str)
-{
-	if (str != NULL)
-	{
-		return (write(1, str, strlen(str)));
-	}
-	else
-	{
-		return (write(1, "(null)", 6));
-	}
-}
 
-/**
- * _printf - a function that produces output according to a format
- * @format: Pointer to a format string
- *
- * Return: Number of characters to be printed
- */
 int _printf(const char *format, ...)
 {
-	int prn = 0;
-	va_list args;
+	int i, printed = 0, printed_chars = 0;
+	int flags, width, precision, size, buff_ind = 0;
+	va_list list;
+	char buffer[BUFF_SIZE];
 
 	if (format == NULL)
-	{
 		return (-1);
-	}
 
-	va_start(args, format);
+	va_start(list, format);
 
-	while (*format)
+	for (i = 0; format && format[i] != '\0'; i++)
 	{
-		if (*format == '%')
+		if (format[i] != '%')
 		{
-			format++;
-			if (*format == '\0')
-			{
-				break;
-			}
-
-			prn += handle_format_specifier(format, args);
+			buffer[buff_ind++] = format[i];
+			if (buff_ind == BUFF_SIZE)
+				print_buffer(buffer, &buff_ind);
+			/* write(1, &format[i], 1);*/
+			printed_chars++;
 		}
 		else
 		{
-			prn += _write_char(*format);
+			print_buffer(buffer, &buff_ind);
+			flags = get_flags(format, &i);
+			width = get_width(format, &i, list);
+			precision = get_precision(format, &i, list);
+			size = get_size(format, &i);
+			++i;
+			printed = handle_print(format, &i, list, buffer,
+				flags, width, precision, size);
+			if (printed == -1)
+				return (-1);
+			printed_chars += printed;
 		}
-		format++;
 	}
 
-	va_end(args);
-	return (prn);
+	print_buffer(buffer, &buff_ind);
+
+	va_end(list);
+
+	return (printed_chars);
 }
 
 /**
- * handle_format_specifier - Handles format specifiers in the format string
- * @format: Pointer to the format string
- * @args: Argument list
- *
- * Return: number of characters to be printed
+ * print_buffer - Prints the contents of the buffer if it exist
+ * @buffer: Array of chars
+ * @buff_ind: Index at which to add next char, represents the length.
  */
-int handle_format_specifier(const char *format, va_list args)
+
+void print_buffer(char buffer[], int *buff_ind)
 {
-	int prn = 0;
+	if (*buff_ind > 0)
+		write(1, &buffer[0], *buff_ind);
 
-	switch (*format)
-	{
-		case 'c':
-		{
-			int c = va_arg(args, int);
-
-			prn += _write_char(c);
-			break;
-		}
-		case 's':
-		{
-			const char *str = va_arg(args, const char *);
-
-			if (str == NULL)
-			{
-				prn += _write_str("(null)");
-			}
-			else
-			{
-				prn += _write_str(str);
-			}
-			break;
-		}
-		case '%':
-		{
-			prn += _write_char('%');
-			break;
-		}
-		default:
-		{
-			prn += _write_char('%');
-			prn += _write_char(*format);
-			break;
-		}
-	}
-	format++;
-
-	return (prn);
+	*buff_ind = 0;
 }
+
+
+
+
+
+
+
+
+
